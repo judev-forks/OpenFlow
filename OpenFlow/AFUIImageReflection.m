@@ -74,7 +74,12 @@
 	
 	CGSize size = CGSizeMake(self.size.width, self.size.height + reflectionHeight);
 	
-	UIGraphicsBeginImageContext(size);
+	if (&UIGraphicsBeginImageContextWithOptions) {
+		UIGraphicsBeginImageContextWithOptions(size, NO, [self scale]);
+	}
+	else {
+		UIGraphicsBeginImageContext(size);
+	}
 	
 	[self drawAtPoint:CGPointZero];
 	CGContextRef context = UIGraphicsGetCurrentContext();
