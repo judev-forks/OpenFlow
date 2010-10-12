@@ -357,6 +357,10 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	if (isSingleTap || isDoubleTap) {
+		if ([self.viewDelegate respondsToSelector:@selector(openFlowView:selectionWillChangeFrom:)])
+			[self.viewDelegate openFlowView:self selectionWillChangeFrom:selectedCoverView.number];
+	}
 	isSingleTap = NO;
 	isDoubleTap = NO;
 	
@@ -398,6 +402,8 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 	dragOffset = 0.0; 
 
 	if (isSingleTap) {
+		if ([self.viewDelegate respondsToSelector:@selector(openFlowView:selectionWillChangeFrom:)])
+			[self.viewDelegate openFlowView:self selectionWillChangeFrom:selectedCoverView.number];
 		// Which cover did the user tap?
 		CGPoint targetPoint = [[touches anyObject] locationInView:self];
 		CALayer *targetLayer = (CALayer *)[self.layer hitTest:targetPoint];
