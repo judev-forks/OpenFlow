@@ -45,6 +45,8 @@
 	CGFloat reflectionFraction; 
 	CGFloat coverHeightOffset; 
 	CGFloat coverImageSize; 
+	CAMediaTimingFunction *animationTimingFunction;
+	CGFloat animationDuration;
 	
 	UIColor *backingColor;
 	
@@ -82,6 +84,9 @@
 @property (assign, nonatomic) CGFloat reflectionFraction; 
 @property (assign, nonatomic) CGFloat coverHeightOffset; 
 @property (assign, nonatomic) CGFloat coverImageSize; 
+
+@property (assign, nonatomic) CGFloat animationDuration;
+@property (retain, nonatomic) CAMediaTimingFunction *animationTimingFunction;
 
 @property (retain, nonatomic) UIColor *backingColor; 
 

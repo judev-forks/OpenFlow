@@ -68,6 +68,9 @@
 @synthesize allScreenCovers;
 @synthesize onScreenCovers;
 
+@synthesize animationDuration;
+@synthesize animationTimingFunction;
+
 #pragma mark Utility Methods 
 
 NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
@@ -85,6 +88,8 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 	
 	self.allScreenCovers = nil; 
 	self.onScreenCovers = nil;
+	
+	self.animationTimingFunction = nil;
 	
 	[super dealloc];
 }
@@ -122,6 +127,7 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 }
 
 - (void)setDefaults {
+	self.animationDuration = COVER_ANIMATION_DURATION;
 	self.coverSpacing = COVER_SPACING;
 	self.centerCoverOffset = CENTER_COVER_OFFSET;
 	self.sideCoverAngle = SIDE_COVER_ANGLE;
@@ -245,10 +251,13 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 		newZPosition = 0;
 		newTransform = CATransform3DIdentity;
 	}
-
+	
 	[CATransaction begin];
 		if (animated) {
-			[CATransaction setValue:[NSNumber numberWithFloat:0.01f] forKey:kCATransactionAnimationDuration];
+			if (animationTimingFunction) {
+				[CATransaction setAnimationTimingFunction:animationTimingFunction];
+			}
+			[CATransaction setValue:[NSNumber numberWithFloat:animationDuration / 25] forKey:kCATransactionAnimationDuration];
 		} else {
 			[CATransaction setValue:[NSNumber numberWithFloat:0.00f] forKey:kCATransactionAnimationDuration];
 		}
@@ -258,7 +267,10 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 	
 	[CATransaction begin];
 		if (animated) {
-			[CATransaction setValue:[NSNumber numberWithFloat:0.25f] forKey:kCATransactionAnimationDuration];
+			if (animationTimingFunction) {
+				[CATransaction setAnimationTimingFunction:animationTimingFunction];
+			}
+			[CATransaction setValue:[NSNumber numberWithFloat:animationDuration] forKey:kCATransactionAnimationDuration];
 		} else {
 			[CATransaction setValue:[NSNumber numberWithFloat:0.00f] forKey:kCATransactionAnimationDuration];
 		}
