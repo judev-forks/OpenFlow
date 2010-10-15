@@ -159,6 +159,14 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 	[self.layer setSublayerTransform:sublayerTransform];
 }
 
+- (void)setSideCoverAngle:(CGFloat)f {
+	if (sideCoverAngle != f) {
+		sideCoverAngle = f;
+		[self setUpInitialState];
+	}
+}
+
+
 - (AFItem *)coverForIndex:(NSInteger)coverIndex {
 	AFItem *cover = [self.allScreenCovers objectForKey:[NSNumber numberWithInt:coverIndex]];
 	
