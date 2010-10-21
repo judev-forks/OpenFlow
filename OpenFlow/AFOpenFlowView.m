@@ -98,8 +98,6 @@ NS_INLINE NSRange NSMakeRangeToIndex(NSUInteger loc, NSUInteger loc2) {
 
 - (void) setDataSource:(id <AFOpenFlowViewDataSource>)ds {
 	if (ds != dataSource) {
-		[ds retain]; 
-		[dataSource release];
 		dataSource = ds; 
 		[self setDefaults]; // This is needed or you will get errors loading from a nib!
 		[self reloadData];
